@@ -1,0 +1,39 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Environments
+.venv/
+venv/
+ENV/
+env/
+
+# MiniCloud backend runtime data & local databases
+backend/minicloud.db
+backend/minicloud.db-journal
+backend/minicloud.db-wal
+backend/minicloud.db-shm
+backend/mock_storage/
+backend/logs/
+*.log
+
+# Environment variables
+.env
+backend/.env
+frontend/.env
+
+# Node.js / Vite / React frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE & OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

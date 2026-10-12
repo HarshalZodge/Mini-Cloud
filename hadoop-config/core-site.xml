@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!-- MiniCloud Hadoop 3.3.6 core-site.xml -->
+<configuration>
+    <!-- Default FileSystem URI pointing to NameNode RPC port -->
+    <property>
+        <name>fs.defaultFS</name>
+        <value>hdfs://0.0.0.0:9000</value>
+        <description>The name of the default file system. A URI whose scheme and authority determine the FileSystem implementation.</description>
+    </property>
+
+    <!-- Base temporary directory for Hadoop daemons -->
+    <property>
+        <name>hadoop.tmp.dir</name>
+        <value>/home/hadoop/hadoop_data/tmp</value>
+        <description>A base for other temporary directories.</description>
+    </property>
+
+    <!-- Enable WebHDFS Proxyuser access for the configured HDFS user -->
+    <!-- Allows WebHDFS REST requests to impersonate users without Kerberos authentication -->
+    <property>
+        <name>hadoop.proxyuser.hadoop.hosts</name>
+        <value>*</value>
+        <description>The host from where the proxy user can connect</description>
+    </property>
+    <property>
+        <name>hadoop.proxyuser.hadoop.groups</name>
+        <value>*</value>
+        <description>The groups which the proxy user can impersonate</description>
+    </property>
+</configuration>

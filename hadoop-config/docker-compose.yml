@@ -1,0 +1,65 @@
+services:
+  namenode:
+    image: apache/hadoop:3.3.6
+    container_name: minicloud-namenode
+    hostname: namenode
+    command: ["hdfs", "namenode"]
+    ports:
+      - "9870:9870"
+      - "9000:9000"
+    environment:
+      HADOOP_HOME: /opt/hadoop
+      ENSURE_NAMENODE_DIR: "/tmp/hadoop-root/dfs/name"
+    volumes:
+      - ./core-site.xml:/opt/hadoop/etc/hadoop/core-site.xml
+      - ./hdfs-site.xml:/opt/hadoop/etc/hadoop/hdfs-site.xml
+      - namenode_data:/tmp/hadoop-root/dfs/name
+    networks:
+      hadoop_net:
+        aliases:
+          - namenode
+
+  datanode1:
+    image: apache/hadoop:3.3.6
+    container_name: minicloud-datanode1
+    hostname: datanode1
+    command: ["hdfs", "datanode"]
+    ports:
+      - "9864:9864"
+    volumes:
+      - ./core-site.xml:/opt/hadoop/etc/hadoop/core-site.xml
+      - ./hdfs-site.xml:/opt/hadoop/etc/hadoop/hdfs-site.xml
+      - datanode1_data:/tmp/hadoop-root/dfs/data
+    networks:
+      hadoop_net:
+        aliases:
+          - datanode1
+    depends_on:
+      - namenode
+
+  datanode2:
+    image: apache/hadoop:3.3.6
+    container_name: minicloud-datanode2
+    hostname: datanode2
+    command: ["hdfs", "datanode"]
+    ports:
+      - "9865:9864"
+    volumes:
+      - ./core-site.xml:/opt/hadoop/etc/hadoop/core-site.xml
+      - ./hdfs-site.xml:/opt/hadoop/etc/hadoop/hdfs-site.xml
+      - datanode2_data:/tmp/hadoop-root/dfs/data
+    networks:
+      hadoop_net:
+        aliases:
+          - datanode2
+    depends_on:
+      - namenode
+
+volumes:
+  namenode_data:
+  datanode1_data:
+  datanode2_data:
+
+networks:
+  hadoop_net:
+    driver: bridge

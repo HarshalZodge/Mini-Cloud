@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!-- MiniCloud Hadoop 3.3.6 hdfs-site.xml -->
+<configuration>
+    <!-- Enable WebHDFS REST API -->
+    <property>
+        <name>dfs.webhdfs.enabled</name>
+        <value>true</value>
+        <description>Enables WebHDFS (REST API) access to HDFS NameNode and DataNodes.</description>
+    </property>
+
+    <!-- Default block replication factor (1 for single-node / initial pseudo-distributed setup) -->
+    <!-- Upgrade to 2 or 3 by editing this property when additional DataNodes are attached -->
+    <property>
+        <name>dfs.replication</name>
+        <value>1</value>
+        <description>Default block replication.</description>
+    </property>
+
+    <!-- NameNode storage directory for FSImage and Edits -->
+    <property>
+        <name>dfs.namenode.name.dir</name>
+        <value>file:///home/hadoop/hadoop_data/hdfs/namenode</value>
+    </property>
+
+    <!-- DataNode storage directory for raw data blocks -->
+    <property>
+        <name>dfs.datanode.data.dir</name>
+        <value>file:///home/hadoop/hadoop_data/hdfs/datanode</value>
+    </property>
+
+    <!-- WebHDFS HTTP listen address on NameNode -->
+    <property>
+        <name>dfs.namenode.http-address</name>
+        <value>0.0.0.0:9870</value>
+    </property>
+
+    <!-- DataNode HTTP listen address for WebHDFS direct streaming -->
+    <property>
+        <name>dfs.datanode.http.address</name>
+        <value>0.0.0.0:9864</value>
+    </property>
+
+    <!-- CRITICAL FOR LAN / VM ACCESS: Resolve DataNode Hostname redirection issue -->
+    <!-- Forces NameNode to redirect clients using Hostnames or IPs properly resolved by external network clients -->
+    <property>
+        <name>dfs.client.use.datanode.hostname</name>
+        <value>true</value>
+        <description>Whether clients should use DataNode hostnames when connecting to DataNodes.</description>
+    </property>
+    <property>
+        <name>dfs.datanode.use.datanode.hostname</name>
+        <value>true</value>
+        <description>Whether DataNodes should use hostnames when reporting to NameNode.</description>
+    </property>
+
+    <!-- Disable permission checking in development if desired; kept true by default for security -->
+    <property>
+        <name>dfs.permissions.enabled</name>
+        <value>false</value>
+        <description>If false, permission checking is turned off in HDFS for lab demonstrations.</description>
+    </property>
+</configuration>
