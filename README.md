@@ -294,15 +294,82 @@ BLOCKED_EXTENSIONS=.exe,.bat,.cmd,.sh,.js,.msi
 
 ---
 
-## 17. Running MiniCloud
+## 17. How to Start and Run MiniCloud (Complete Step-by-Step Guide)
 
-### Mode 1: LAN Production Server (Recommended for Demos)
-Runs Waitress serving both backend API and React SPA on port 5000:
+### Prerequisites Check
+Before running, make sure your dependencies are installed:
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\run-lan-server.ps1
+# 1. Install Python requirements (run once)
+python -m pip install -r .\backend\requirements.txt
+
+# 2. Build the frontend (already built, but rebuild anytime you edit UI)
+cd frontend
+npm install
+npm run build
+cd ..
 ```
 
-### Mode 2: Concurrent Development Mode (Vite + Flask)
+---
+
+### Option A: Quick Run with One Command (Production / LAN Mode — Recommended)
+This runs the production **Waitress** WSGI server. It serves both the backend API and the React frontend together on port `5000`:
+
+```powershell
+# In Windows PowerShell:
+powershell -ExecutionPolicy Bypass -File .\scripts\run-lan-server.ps1
+```
+*Or run directly via Python:*
+```powershell
+cd backend
+python server.py
+```
+
+#### Where to open it:
+- **On this computer:** Open [http://localhost:5000](http://localhost:5000)
+- **On another lab PC / smartphone on the same LAN:** Open `http://<YOUR_IP>:5000` (e.g. `http://192.168.1.100:5000`)
+- **Design system preview:** Open [http://localhost:5000/design-preview](http://localhost:5000/design-preview)
+
+---
+
+### Option B: Development Mode (with Instant Hot-Reload)
+Use this mode if you are actively editing the frontend code:
+
+- **Terminal 1 (Backend - Flask):**
+  ```powershell
+  cd "e:\New folder\Cloud Project\backend"
+  python app.py
+  ```
+  *(Runs backend on `http://localhost:5000`)*
+
+- **Terminal 2 (Frontend - Vite):**
+  ```powershell
+  cd "e:\New folder\Cloud Project\frontend"
+  npm run dev
+  ```
+  *(Runs frontend on `http://localhost:5173` with automatic API proxy to port 5000)*
+
+*Or run both automatically with one script:*
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\start-dev.ps1
+```
+
+---
+
+### Default Login Credentials
+You can log in immediately using the pre-created administrator account:
+- **Username / Email:** `admin` (or `admin@minicloud.lan`)
+- **Password:** `AdminPassword123`
+
+To create another administrator account or reset passwords via command line:
+```powershell
+python .\scripts\create_admin.py --username admin --email admin@minicloud.lan --password AdminPassword123
+```
+*(Any user registered through the `/register` web page will automatically receive standard `user` privileges).*
+
+---
+
+### How to Stop the Server
+Press `Ctrl + C` in the PowerShell terminal where the server is running.
 Runs Flask on port 5000 with Vite HMR on port 5173:
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\scripts\start-dev.ps1
